@@ -88,14 +88,7 @@ Vue.component('messages-list',{
         '<message-form v-bind:messages="messages" v-bind:messageAttr="message"/>' +
         ' <message-row v-for="bla in messages" :key="bla.id" :bla="bla" ' +
         ':messages="messages" :editMethod="editMethod"/> </div>',
-    created: function(){
-        messageApi.get().then(result =>
-            result.json().then(data=>
-                data.forEach(message => this.messages.push(message))
-            )
-        );
-        console.log(this.messages);
-    },
+
     methods: {
         editMethod: function(bla) {
             this.message = bla;
@@ -108,6 +101,15 @@ var app = new Vue({
     el: '#app',
     template:'<messages-list :messages="messages"/>',
     data: {
-        messages:[]
-    }
+        messages: frontendData.messages,
+        profile: frontendData.profile
+    },
+    created: function(){
+        messageApi.get().then(result =>
+            result.json().then(data=>
+                data.forEach(message => this.messages.push(message))
+            )
+        );
+        console.log(this.messages);
+    },
 });
